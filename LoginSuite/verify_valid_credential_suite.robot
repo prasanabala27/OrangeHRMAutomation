@@ -2,13 +2,22 @@
 Documentation   This suite will handle valid credentail
 ...     test - TC_OH_2
 
-Test Setup      Launch Browser
-Test Teardown    Close Browser
 Resource    ../resource/commonfunctionality.resource
 
+Test Setup      Launch Browser
+Test Teardown    Close Browser
+
+Test Template    valid Credential Template
+
+Library     DataDriver      file=../test_data/orange_data.xlsx   sheet_name=valid Credential
+
 *** Test Cases ***
-valid Credential Test
-    Input Text    id=txtUsername    Admin
-    Input Password    id=txtPassword    admin123
+TC1
+
+*** Keywords ***
+valid Credential Template
+    [Arguments]     ${username}   ${password}     ${expected}
+    Input Text    id=txtUsername    ${username}
+    Input Password    id=txtPassword    ${password}
     Click Element    id=btnLogin
-    Page Should Contain    My Info
+    Page Should Contain    ${expected}
